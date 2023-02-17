@@ -54,13 +54,13 @@ export default function AddPopularButton({ isLiked, productId }) {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {isLiked ? "Quitar " : "Agregar "}
-              producto a "Populares"
+              {isLiked ? "Quitar" : "Agregar "}
+              producto a Populares
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              {isLiked ? "Quitaras " : "Agregaras "}
-              este producto a la seccion "Populares"
+              {isLiked ? "Quitaras" : "Agregaras"}
+              este producto a la seccion Populares
             </AlertDialogBody>
 
             <AlertDialogFooter>
