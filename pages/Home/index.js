@@ -1,40 +1,9 @@
-import {
-  Button,
-  Text,
-  Drawer,
-  DrawerBody,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  useDisclosure,
-  Flex,
-  Box,
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
-} from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
 import useUser from "../../hooks/useUser";
-import { logOut } from "../../firebase/services/auth";
-import {
-  Edit,
-  Logo,
-  MenuIcon,
-  Trash,
-  Producto,
-  Category,
-  Costo,
-  LogoBlack,
-} from "../../components/common/iconos";
-import DashboardTop from "../../components/Dashboard/DashboardTop";
-import Link from "next/link";
-import LatestProducts from "../../components/Dashboard/LatestProducts";
+import { Producto, Category, Costo } from "../../components/common/iconos";
+// import DashboardTop from "../../components/dashboard/DashboardTop";
+import DashboardTop from "../../components/dashboard/DashboardTop";
+import LatestProducts from "../../components/dashboard/LatestProducts";
 import Layout from "../../components/layout";
 
 const NavLinks = [

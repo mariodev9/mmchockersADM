@@ -22,8 +22,7 @@ import {
 import { getAllProducts } from "../../firebase/services/products";
 import SingleRowProduct from "../../components/products/SingleRowProduct";
 import { Filter, Trash } from "../../components/common/iconos";
-import DeleteButton from "../../components/buttons/DeleteButton";
-import DashboardTop from "../../components/Dashboard/DashboardTop";
+import DashboardTop from "../../components/dashboard/DashboardTop";
 import Layout from "../../components/layout";
 import { useForm } from "react-hook-form";
 
