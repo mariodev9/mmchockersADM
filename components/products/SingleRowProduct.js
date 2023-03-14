@@ -69,7 +69,7 @@ export default function SingleRowProduct({
           {category}
         </Td>
         <Td pt={2} pb={2}>
-          <Button onClick={() => onOpen()}>
+          <Button bg={"background.100"} onClick={() => onOpen()}>
             <Edit />
           </Button>
         </Td>

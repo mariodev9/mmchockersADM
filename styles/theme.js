@@ -45,7 +45,7 @@ export const theme = extendTheme({
   components: {
     Button: {
       baseStyle: {
-        bg: "none",
+        bg: "background.100",
         _hover: {
           bg: "none",
         },

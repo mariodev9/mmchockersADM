@@ -43,7 +43,7 @@ export default function DeleteButton({ productId }) {
 
   return (
     <>
-      <Button onClick={onOpen}>
+      <Button onClick={onOpen} bg={"background.100"}>
         <Trash />
       </Button>
       <AlertDialog
