@@ -52,7 +52,7 @@ export default function DeleteButton({ productId }) {
         onClose={onClose}
       >
         <AlertDialogOverlay>
-          <AlertDialogContent>
+          <AlertDialogContent bg={"background.100"}>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Eliminar Producto
             </AlertDialogHeader>

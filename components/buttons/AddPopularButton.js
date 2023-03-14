@@ -52,7 +52,7 @@ export default function AddPopularButton({ isLiked, productId }) {
         onClose={onClose}
       >
         <AlertDialogOverlay>
-          <AlertDialogContent>
+          <AlertDialogContent bg={"background.100"}>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               {isLiked ? "Quitar" : "Agregar "}
               producto a Populares
