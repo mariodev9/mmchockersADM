@@ -89,7 +89,7 @@ export default function DashboardTop({ title }) {
 
       <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
         <ModalOverlay />
-        <ModalContent color={"#fff"}>
+        <ModalContent color={"#fff"} bg={"background.100"}>
           <ModalHeader>Agregar Producto</ModalHeader>
           <ModalCloseButton />
           <ModalBody>

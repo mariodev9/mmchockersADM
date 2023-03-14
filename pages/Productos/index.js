@@ -9,19 +9,13 @@ import {
   Flex,
   Text,
   Input,
-  Box,
   Select,
   InputGroup,
-  InputLeftElement,
   Button,
-  RangeSlider,
-  RangeSliderTrack,
-  RangeSliderFilledTrack,
-  RangeSliderThumb,
 } from "@chakra-ui/react";
 import { getAllProducts } from "../../firebase/services/products";
 import SingleRowProduct from "../../components/products/SingleRowProduct";
-import { Filter, Trash } from "../../components/common/iconos";
+import { Filter } from "../../components/common/iconos";
 import DashboardTop from "../../components/dashboard/DashboardTop";
 import Layout from "../../components/layout";
 import { useForm } from "react-hook-form";

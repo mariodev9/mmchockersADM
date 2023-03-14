@@ -84,7 +84,7 @@ export default function SingleRowProduct({
       {/* Modal para Editar Producto */}
       <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
         <ModalOverlay />
-        <ModalContent color={"#fff"}>
+        <ModalContent color={"#fff"} bg={"background.100"}>
           <ModalHeader>Editar Producto</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
