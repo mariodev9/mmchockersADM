@@ -1,7 +1,7 @@
 import { storage } from "../../firebaseConfig";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-export const uploadImage = (file, onChange) => {
+export const uploadImages = (file, images, setImages) => {
   const name = new Date().getTime() + file.name;
   const storageRef = ref(storage, file.name);
   const uploadTask = uploadBytesResumable(storageRef, file);
@@ -23,7 +23,7 @@ export const uploadImage = (file, onChange) => {
     (error) => {},
     () => {
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        onChange(downloadURL);
+        setImages((images) => [...images, downloadURL]);
       });
     }
   );

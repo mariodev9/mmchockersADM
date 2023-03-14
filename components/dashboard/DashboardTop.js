@@ -25,16 +25,16 @@ import {
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { addProduct } from "../../firebase/services/products";
-import { uploadImage } from "../../firebase/services/image";
+import { uploadImages } from "../../firebase/services/image";
 import TotalProducts from "./TotalProducts";
 
 export default function DashboardTop({ title }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [file, setFile] = useState("");
-  const [image, setImage] = useState("");
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
-    file && uploadImage(file, setImage);
+    file && uploadImages(file, images, setImages);
   }, [file]);
 
   const toast = useToast();
@@ -68,8 +68,8 @@ export default function DashboardTop({ title }) {
     formState: { errors },
   } = useForm();
 
-  const handleDeleteImg = () => {
-    setImage("");
+  const handleDeleteImg = (position) => {
+    setImages(images.filter((item, index) => index != position));
     setFile("");
   };
 
@@ -96,7 +96,7 @@ export default function DashboardTop({ title }) {
             <form
               onSubmit={handleSubmit((data) => {
                 addProduct(
-                  { image, ...data },
+                  { images, ...data },
                   succesfullCreated,
                   errorCreatingProduct
                 );
@@ -104,15 +104,33 @@ export default function DashboardTop({ title }) {
               })}
             >
               <Flex direction={{ base: "column", tablet: "row" }}>
-                <Flex w={"50%"} p={"0px 15px"} direction={"column"}>
-                  <Box
-                    w={"full"}
-                    h={"250px"}
-                    bgImage={image}
-                    bgPos={"center"}
-                    bgRepeat={"no-repeat"}
-                    bgSize={"cover"}
-                  ></Box>
+                <Flex
+                  w={{ base: "100%", tablet: "50%" }}
+                  p={"0px 15px"}
+                  direction={"column"}
+                  border={"1px solid red"}
+                >
+                  {images.map((image, index) => (
+                    <Box
+                      key={image}
+                      w={"full"}
+                      h={"250px"}
+                      bgImage={image}
+                      bgPos={"center"}
+                      bgRepeat={"no-repeat"}
+                      bgSize={"cover"}
+                      borderRadius={"15px"}
+                      border={"1px solid #666"}
+                    >
+                      <Button
+                        bg={"red.600"}
+                        onClick={() => handleDeleteImg(index)}
+                      >
+                        X
+                      </Button>
+                    </Box>
+                  ))}
+
                   <FormControl>
                     <Input
                       type="file"
@@ -123,19 +141,17 @@ export default function DashboardTop({ title }) {
                       }}
                       display="none"
                     />
-                    {!image && (
-                      <FormLabel htmlFor="productImage" cursor="pointer">
-                        Agregar foto
-                      </FormLabel>
-                    )}
+                    <FormLabel htmlFor="productImage" cursor="pointer">
+                      Agregar foto
+                    </FormLabel>
                   </FormControl>
-                  {file && !image && (
+                  {/* {file && !images && (
                     <Flex w="100%" h="100%" justify={"center"} align={"center"}>
                       <Spinner color="red" />
                     </Flex>
-                  )}
+                  )} */}
 
-                  {image && (
+                  {/* {images && (
                     <Box>
                       <Button
                         borderRadius="99px"
@@ -150,9 +166,10 @@ export default function DashboardTop({ title }) {
                         X
                       </Button>
                     </Box>
-                  )}
+                  )} */}
                 </Flex>
-                <VStack spacing={"15px"} w={"50%"}>
+
+                <VStack spacing={"15px"} w={{ base: "100%", tablet: "50%" }}>
                   <FormControl id="name">
                     <FormLabel>Nombre </FormLabel>
                     <Input

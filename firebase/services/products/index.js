@@ -17,13 +17,13 @@ import {
 import { firestore } from "../../firebaseConfig";
 
 export const addProduct = (
-  { image, name, description, price, category },
+  { images, name, description, price, category },
   succesfullCreated,
   errorCreatingProduct
 ) => {
   try {
     const docRef = addDoc(collection(firestore, "products"), {
-      image,
+      images,
       name,
       description,
       price: parseInt(price),
