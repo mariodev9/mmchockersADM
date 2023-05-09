@@ -110,7 +110,5 @@ export const updateProduct = async (productId, data) => {
   // console.log(data, "la data tiene las imagenes actualizadas?");
   const productRef = doc(firestore, "products", productId);
 
-  await updateDoc(productRef, {
-    ...data,
-  });
+  await updateDoc(productRef, data);
 };

@@ -35,7 +35,7 @@ export default function DashboardTop({ title }) {
 
   useEffect(() => {
     file && uploadImages(file, images, setImages);
-  }, [file, images]);
+  }, [file]);
   // }, [file]);
 
   const router = useRouter();

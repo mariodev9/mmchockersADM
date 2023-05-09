@@ -128,12 +128,6 @@ export default function SingleRowProduct({
                             </div>
                           </a>
                         </Box>
-                        {/* <Button
-                            bg={"#999"}
-                            onClick={() => handleDeleteImg(index)}
-                          >
-                            X
-                          </Button> */}
                         <button onClick={() => handleDeleteImg(index)}>
                           <Trash stroke={"#999"} strokeWidth="2" />
                         </button>

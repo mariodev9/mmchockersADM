@@ -25,7 +25,7 @@ export default function AddProductPage() {
 
   useEffect(() => {
     file && uploadImages(file, images, setImages);
-  }, [file, images]);
+  }, [file]);
   // }, [file]);
 
   const toast = useToast();
