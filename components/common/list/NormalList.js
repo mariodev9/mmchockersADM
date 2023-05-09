@@ -9,24 +9,20 @@ import {
   Th,
   TableContainer,
 } from "@chakra-ui/react";
-const TableHeadList = [
-  "Nombre",
-  "Precio",
-  "Categoria",
-  "Editar",
-  "Eliminar",
-  "Populares",
-];
 
-export default function NormalList({ children }) {
+export default function NormalList({ children, TableHeadList }) {
   return (
     <>
-      <TableContainer color={"#fff"} layerStyle={"primaryBox"} mt="15px">
+      <TableContainer color={"#000"} mt="15px">
         <Table variant="simple">
           <Thead>
             <Tr>
               {TableHeadList.map((item, key) => (
-                <Th key={item}>{item}</Th>
+                <Th borderBottom={"2px"} borderColor={"gray.400"} key={item}>
+                  <Text fontWeight={700} color={"gray.400"}>
+                    {item}
+                  </Text>
+                </Th>
               ))}
             </Tr>
           </Thead>

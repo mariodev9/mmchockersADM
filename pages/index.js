@@ -28,7 +28,7 @@ export default function Home() {
   }, [adminSession]);
 
   useEffect(() => {
-    adminSession && router.replace("/Home");
+    adminSession && router.replace("/dashboard");
   }, [adminSession]);
 
   const {

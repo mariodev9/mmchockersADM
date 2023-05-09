@@ -43,7 +43,7 @@ export default function AddPopularButton({ isLiked, productId }) {
 
   return (
     <>
-      <Button onClick={onOpen} bg={"background.100"}>
+      <Button onClick={onOpen} bg={"#FFFBEF"}>
         <Like isLiked={isLiked} />
       </Button>
       <AlertDialog

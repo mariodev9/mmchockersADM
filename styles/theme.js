@@ -5,12 +5,20 @@ export const theme = extendTheme({
   styles: {
     global: {
       body: {
-        bg: "#171922",
+        bg: "#f3f3f3",
         color: "#fff",
       },
       a: {
         textDecoration: "none",
       },
+    },
+  },
+
+  layerStyles: {
+    informationWraper: {
+      w: "100%",
+      h: "130px",
+      bg: "red",
     },
   },
 
@@ -34,11 +42,10 @@ export const theme = extendTheme({
   // LAYER
   layerStyles: {
     primaryBox: {
-      bg: "primary.100",
+      bg: "#fff",
       w: "full",
       p: "40px 20px",
-      color: "white",
-      borderRadius: "10px",
+      borderRadius: "15px",
     },
   },
   // COMPONENTES

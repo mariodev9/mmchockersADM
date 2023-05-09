@@ -8,6 +8,7 @@ import {
   Tr,
   Th,
   TableContainer,
+  Box,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { listenLatestProducts } from "../../firebase/services/products";
@@ -21,17 +22,26 @@ export default function LatestProducts() {
     listenLatestProducts(setLatestProducts);
   }, []);
 
+  const TableHeadList = [
+    "Nombre",
+    "Precio",
+    "Categoria",
+    "Editar",
+    "Populares",
+    "Eliminar",
+  ];
+
   return (
     <>
-      <Flex justify={"space-between"} mt="30px">
-        <Text fontSize={"20px"}>Ultimos productos</Text>
-        <Link href={"/Productos"}> Ver todos</Link>
-      </Flex>
-      <NormalList>
-        {latestProducts.map((item, key) => (
-          <SingleRowProduct key={item.id} {...item} />
-        ))}
-      </NormalList>
+      <Box layerStyle={"primaryBox"} color={"#000"}>
+        <Text fontSize={"30px"}>Ultimos productos</Text>
+
+        <NormalList TableHeadList={TableHeadList}>
+          {latestProducts.map((item, key) => (
+            <SingleRowProduct key={item.id} {...item} />
+          ))}
+        </NormalList>
+      </Box>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   Button,
   Tr,
@@ -20,12 +20,8 @@ import {
   FormLabel,
   Select,
   Text,
-  Editable,
-  EditableInput,
-  EditableTextarea,
-  EditablePreview,
 } from "@chakra-ui/react";
-import { Edit, Like } from "../common/iconos";
+import { Edit, Like, LinkIcon, PhotoIcon, Trash } from "../common/iconos";
 import { useForm } from "react-hook-form";
 import DeleteButton from "../buttons/DeleteButton";
 import AddPopularButton from "../buttons/AddPopularButton";
@@ -37,11 +33,13 @@ export default function SingleRowProduct({
   price,
   category,
   popular,
-  image,
+  images,
   description,
 }) {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [productImages, setProductImages] = useState(images);
 
   const {
     register,
@@ -56,29 +54,35 @@ export default function SingleRowProduct({
     },
   });
 
+  const handleDeleteImg = (position) => {
+    setProductImages(productImages.filter((item, index) => index != position));
+    // setFile("");
+  };
+
+  const TdRow = ({ children }) => (
+    <Td borderColor={"#fff"} pt={2} pb={2}>
+      {children}
+    </Td>
+  );
+
   return (
     <>
-      <Tr key={id}>
-        <Td pt={2} pb={2}>
-          {name}
-        </Td>
-        <Td pt={2} pb={2}>
-          ${price}
-        </Td>
-        <Td pt={2} pb={2}>
-          {category}
-        </Td>
-        <Td pt={2} pb={2}>
-          <Button bg={"background.100"} onClick={() => onOpen()}>
+      <Tr key={id} fontWeight={600}>
+        <TdRow>{name}</TdRow>
+
+        <TdRow>$ {price}</TdRow>
+        <TdRow>{category}</TdRow>
+        <TdRow>
+          <Button bg={"#EFF0FF"} onClick={() => onOpen()}>
             <Edit />
           </Button>
-        </Td>
-        <Td pt={2} pb={2}>
-          <DeleteButton productId={id} />
-        </Td>
-        <Td pt={2} pb={2}>
+        </TdRow>
+        <TdRow>
           <AddPopularButton productId={id} isLiked={popular} />
-        </Td>
+        </TdRow>
+        <TdRow>
+          <DeleteButton productId={id} />
+        </TdRow>
       </Tr>
 
       {/* Modal para Editar Producto */}
@@ -90,22 +94,52 @@ export default function SingleRowProduct({
           <ModalBody>
             <form
               onSubmit={handleSubmit((data) => {
-                updateProduct(id, { ...data });
-                // succesfullCreated,
-                // errorCreatingProduct
+                updateProduct(id, { productImages, ...data });
                 onClose();
               })}
             >
               <Flex direction={{ base: "column", tablet: "row" }}>
                 <Flex w={"50%"} p={"0px 15px"} direction={"column"}>
-                  {/* <Box
-                    w={"full"}
-                    h={"250px"}
-                    bgImage={image}
-                    bgPos={"center"}
-                    bgRepeat={"no-repeat"}
-                    bgSize={"cover"}
-                  ></Box> */}
+                  <Text fontSize={"2xl"}>Imagenes</Text>
+                  {productImages.map((image, index) => (
+                    <Flex
+                      key={image}
+                      m={"10px 0px"}
+                      border={"2px solid #999"}
+                      p={"8px 16px"}
+                      borderRadius={"10px"}
+                      justify={"space-between"}
+                    >
+                      <Flex>
+                        <Box>
+                          <PhotoIcon />
+                        </Box>
+                        <Text ml={"5px"}>Image {index + 1}</Text>
+                      </Flex>
+                      <Flex>
+                        <Box mr={"10px"}>
+                          <a
+                            target="_blank"
+                            href={image}
+                            rel="noopener noreferrer"
+                          >
+                            <div>
+                              <LinkIcon />
+                            </div>
+                          </a>
+                        </Box>
+                        {/* <Button
+                            bg={"#999"}
+                            onClick={() => handleDeleteImg(index)}
+                          >
+                            X
+                          </Button> */}
+                        <button onClick={() => handleDeleteImg(index)}>
+                          <Trash stroke={"#999"} strokeWidth="2" />
+                        </button>
+                      </Flex>
+                    </Flex>
+                  ))}
                   <FormControl>
                     <Input
                       type="file"
@@ -116,36 +150,10 @@ export default function SingleRowProduct({
                       }}
                       display="none"
                     />
-                    {/* {!image && (
-                      <FormLabel htmlFor="productImage" cursor="pointer">
-                        Agregar foto
-                      </FormLabel>
-                    )} */}
                   </FormControl>
-                  {/* {file && !image && (
-                    <Flex w="100%" h="100%" justify={"center"} align={"center"}>
-                      <Spinner color="red" />
-                    </Flex>
-                  )} */}
-
-                  {/* {image && (
-                    <Box>
-                      <Button
-                        borderRadius="99px"
-                        onClick={handleDeleteImg}
-                        position="absolute"
-                        bg="red.400"
-                        zIndex="2"
-                        _hover={{
-                          bg: "gray",
-                        }}
-                      >
-                        X
-                      </Button>
-                    </Box>
-                  )} */}
                 </Flex>
                 <VStack spacing={"15px"} w={"50%"}>
+                  {/* Name input */}
                   <FormControl id="name">
                     <FormLabel>Nombre </FormLabel>
                     <Input
@@ -156,6 +164,8 @@ export default function SingleRowProduct({
                     />
                   </FormControl>
                   <Text color="red.600">{errors.name?.message}</Text>
+
+                  {/* Description input */}
                   <FormControl>
                     <FormLabel>Descripcion</FormLabel>
                     <Input
@@ -171,6 +181,7 @@ export default function SingleRowProduct({
                   </FormControl>
                   <Text color="red.600">{errors.description?.message}</Text>
 
+                  {/* Precio input */}
                   <FormControl>
                     <FormLabel>Precio </FormLabel>
                     <Input
@@ -183,6 +194,7 @@ export default function SingleRowProduct({
                   </FormControl>
                   <Text color="red.600">{errors.price?.message}</Text>
 
+                  {/* Category input */}
                   <FormControl>
                     <FormLabel>Categoria </FormLabel>
                     <Select
@@ -206,9 +218,14 @@ export default function SingleRowProduct({
                       >
                         Pulseras
                       </option>
+                      <option
+                        selected={category === "Billeteras"}
+                        value="Billeteras"
+                      >
+                        Billeteras
+                      </option>
                     </Select>
                   </FormControl>
-
                   <Text color="red.600">{errors.category?.message}</Text>
                 </VStack>
               </Flex>

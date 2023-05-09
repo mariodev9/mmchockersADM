@@ -75,7 +75,7 @@ export default function Productos() {
     <>
       <Layout>
         <DashboardTop title={"Todos los productos"} />
-        <TableContainer color={"#fff"} layerStyle={"primaryBox"} mt="15px">
+        <TableContainer color={"#000"} layerStyle={"primaryBox"} mt="15px">
           <Table variant="simple">
             <Thead>
               <Tr>

@@ -1,5 +1,6 @@
 html,
 body {
+  color: #000;
   /* background-color: aliceblue; */
   padding: 0;
   margin: 0;
@@ -21,6 +22,6 @@ a {
     color-scheme: light;
   }
   body {
-    color: white;
+    color: #000;
   }
 }

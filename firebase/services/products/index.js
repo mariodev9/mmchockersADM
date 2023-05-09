@@ -17,7 +17,7 @@ import {
 import { firestore } from "../../firebaseConfig";
 
 export const addProduct = (
-  { images, name, description, price, category },
+  { images, name, description, price, category, measures, colors },
   succesfullCreated,
   errorCreatingProduct
 ) => {
@@ -30,6 +30,8 @@ export const addProduct = (
       category,
       createdAt: Timestamp.fromDate(new Date()),
       popular: false,
+      measures,
+      colors,
     }).then(succesfullCreated());
   } catch (error) {
     errorCreatingProduct();
@@ -105,6 +107,7 @@ export const addProductToPopular = async (productId, isLiked) => {
 };
 
 export const updateProduct = async (productId, data) => {
+  // console.log(data, "la data tiene las imagenes actualizadas?");
   const productRef = doc(firestore, "products", productId);
 
   await updateDoc(productRef, {
