@@ -95,7 +95,7 @@ function MobileNavbar() {
             <Logo />
           </DrawerHeader>
           <DrawerBody>
-            {NavLinks.map((item, key) => (
+            {NavLinks.map((item) => (
               <Link key={item.title} href={item.link}>
                 <Flex
                   key={item.title}
