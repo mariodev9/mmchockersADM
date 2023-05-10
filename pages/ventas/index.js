@@ -31,7 +31,7 @@ export default function VentasPage({ data }) {
 
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await fetch(`http://localhost:3000/api/sales`);
+  const res = await fetch(`${process.env.BASE_URL}/api/sales`);
   const data = await res.json();
 
   // Pass data to the page via props
