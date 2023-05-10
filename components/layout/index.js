@@ -56,12 +56,12 @@ const NavLinks = [
   {
     title: "Categorias",
     icon: <Category />,
-    link: "/Categorias",
+    link: "/categorias",
   },
   {
     title: "Gastos",
     icon: <Costo />,
-    link: "/Gastos",
+    link: "/gastos",
   },
 ];
 
