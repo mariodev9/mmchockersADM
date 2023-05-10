@@ -43,6 +43,8 @@ export default function DashboardTop({ title }) {
   return (
     <>
       <Flex
+        direction={{ base: "column", tablet: "row" }}
+        gap={5}
         layerStyle={"primaryBox"}
         justify={"space-between"}
         align={"center"}

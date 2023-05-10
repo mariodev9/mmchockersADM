@@ -4,13 +4,21 @@ import { Box } from "@chakra-ui/react";
 import NormalList from "../../components/common/list/NormalList";
 import SingleRowSell from "../../components/common/Table/SingleRowSell";
 
-const TableHeadList = ["id", "precio total", "estado del pago", "fecha"];
+const TableHeadList = [
+  "id",
+  "nombre",
+  "apellido",
+  "precio total",
+  "estado del pago",
+  "fecha",
+  "ver detalles",
+];
 
 export default function VentasPage({ data }) {
   const { sales } = data;
   return (
     <Layout>
-      <Box>
+      <Box layerStyle={"primaryBox"}>
         <NormalList TableHeadList={TableHeadList}>
           {sales.map((sale) => (
             <SingleRowSell key={sale.id} {...sale} />

@@ -62,7 +62,7 @@ export default function Home() {
               Dashboard
             </Text>
 
-            <InputGroup mb={"10px"} w={"40%"}>
+            {/* <InputGroup mb={"10px"} w={"40%"}>
               <Input
                 fontWeight={500}
                 color={"#000"}
@@ -75,7 +75,7 @@ export default function Home() {
               <InputRightElement>
                 <SearchIcon />
               </InputRightElement>
-            </InputGroup>
+            </InputGroup> */}
           </Flex>
           <Grid
             templateColumns={{

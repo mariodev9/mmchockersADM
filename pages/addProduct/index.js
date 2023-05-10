@@ -26,7 +26,6 @@ export default function AddProductPage() {
   useEffect(() => {
     file && uploadImages(file, images, setImages);
   }, [file]);
-  // }, [file]);
 
   const toast = useToast();
 
@@ -109,7 +108,7 @@ export default function AddProductPage() {
                 <Input
                   type="file"
                   accept="image/png, image/jpeg, image/jpg"
-                  name="Add photo"
+                  name="addPhoto"
                   id="productImage"
                   onChange={(e) => {
                     setFile(e.target.files[0]);

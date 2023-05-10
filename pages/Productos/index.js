@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { getAllProducts } from "../../firebase/services/products";
 import SingleRowProduct from "../../components/products/SingleRowProduct";
-import { Filter } from "../../components/common/iconos";
+import { FilterIcon } from "../../components/common/iconos";
 import DashboardTop from "../../components/dashboard/DashboardTop";
 import Layout from "../../components/layout";
 import { useForm } from "react-hook-form";
@@ -71,6 +71,19 @@ export default function Productos() {
     setProductsFiltred(products);
   }
 
+  const FilterButton = () => (
+    <Button
+      w={"40px"}
+      p={"0px"}
+      ml={2}
+      bg={"#555"}
+      onClick={() => FilterProducts()}
+      _hover={{ bg: "#000" }}
+    >
+      <FilterIcon />
+    </Button>
+  );
+
   return (
     <>
       <Layout>
@@ -86,9 +99,7 @@ export default function Productos() {
                         placeholder="Filtrar por nombre"
                         {...register("nameFilterValue")}
                       />
-                      <Button ml={2} onClick={() => FilterProducts()}>
-                        <Filter />
-                      </Button>
+                      <FilterButton />
                     </InputGroup>
                     <Text>Nombre</Text>
                   </Flex>
@@ -102,9 +113,7 @@ export default function Productos() {
                         placeholder="Filtrar por precio"
                       />
 
-                      <Button ml={2} onClick={() => FilterProducts()}>
-                        <Filter />
-                      </Button>
+                      <FilterButton />
                     </InputGroup>
                     <Text>Precio</Text>
                   </Flex>
@@ -120,9 +129,8 @@ export default function Productos() {
                         <option value="Collares">Collares</option>
                         <option value="Pulseras">Pulseras</option>
                       </Select>
-                      <Button ml={2} onClick={() => FilterProducts()}>
-                        <Filter />
-                      </Button>
+
+                      <FilterButton />
                     </InputGroup>
                     <Text>Categoria</Text>
                   </Flex>
@@ -130,7 +138,11 @@ export default function Productos() {
                 <Th />
                 <Th />
                 <Th pb={10}>
-                  <Button variant={"outline"} onClick={() => CleanFilters()}>
+                  <Button
+                    variant={"secondary"}
+                    _hover={{ color: "#000" }}
+                    onClick={() => CleanFilters()}
+                  >
                     Limpiar filtros
                   </Button>
                 </Th>

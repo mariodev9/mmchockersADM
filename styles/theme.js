@@ -67,6 +67,11 @@ export const theme = extendTheme({
             bg: "#3ba0f9",
           },
         },
+
+        secondary: {
+          bg: "none",
+          _hover: { bg: "none" },
+        },
       },
     },
     // TEXT

@@ -20,6 +20,7 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  DrawerFooter,
 } from "@chakra-ui/react";
 import useUser from "../../hooks/useUser";
 import { logOut } from "../../firebase/services/auth";
@@ -38,29 +39,29 @@ import Link from "next/link";
 
 const NavLinks = [
   {
-    title: "Inicio",
+    title: "Dashboard",
     icon: <DashboardIcon />,
-    link: "dashboard",
+    link: "/dashboard",
   },
   {
     title: "Productos",
     icon: <Producto />,
-    link: "Productos",
+    link: "/productos",
   },
   {
     title: "Ventas",
     icon: <Costo />,
-    link: "ventas",
+    link: "/ventas",
   },
   {
     title: "Categorias",
     icon: <Category />,
-    link: "Categorias",
+    link: "/Categorias",
   },
   {
     title: "Gastos",
     icon: <Costo />,
-    link: "Gastos",
+    link: "/Gastos",
   },
 ];
 
@@ -71,28 +72,27 @@ function MobileNavbar() {
     <>
       <Box
         display={{ base: "block", desktop: "none" }}
-        bg={"background.100"}
+        bg={"#fff"}
         w={"100%"}
         position={"fixed"}
         p="10px 30px"
         zIndex={99}
       >
-        <Flex justify={"space-between"}>
-          <Button onClick={() => onOpen()}>
+        <Flex justify={"space-between"} align={"center"}>
+          <Button bg={"#000"} onClick={() => onOpen()}>
             <MenuIcon />
           </Button>
-          <Button onClick={() => logOut()} color={"#fff"}>
-            Cerrar Sesion
-          </Button>
+
+          <Logo />
         </Flex>
       </Box>
 
       <Drawer onClose={onClose} isOpen={isOpen} placement={"left"}>
         <DrawerOverlay />
-        <DrawerContent bg={"primary.100"}>
+        <DrawerContent bg={"#fff"}>
           <DrawerCloseButton />
           <DrawerHeader>
-            <LogoBlack width="227" height="28" />
+            <Logo />
           </DrawerHeader>
           <DrawerBody>
             {NavLinks.map((item, key) => (
@@ -105,13 +105,18 @@ function MobileNavbar() {
                 >
                   <Box mr="5px">{item.icon}</Box>
 
-                  <Text fontSize={"2xl"} color={"white"}>
+                  <Text fontSize={"2xl"} color={"#000"}>
                     {item.title}
                   </Text>
                 </Flex>
               </Link>
             ))}
           </DrawerBody>
+          <DrawerFooter>
+            <Button bg={"#000"} onClick={() => logOut()} color={"#fff"}>
+              Cerrar Sesion
+            </Button>
+          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>
@@ -158,7 +163,12 @@ export default function Layout({ children }) {
           ))}
         </Box>
 
-        <Box w={{ base: "100%", desktop: "80%" }} color={"#000"} p="30px 30px">
+        <Box
+          w={{ base: "100%", desktop: "80%" }}
+          color={"#000"}
+          px=" 30px"
+          py={{ base: "80px", tablet: "30px" }}
+        >
           {children}
         </Box>
       </Flex>

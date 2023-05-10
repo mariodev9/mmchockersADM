@@ -62,7 +62,7 @@ export default function DeleteButton({ productId }) {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
+              <Button variant={"secondary"} ref={cancelRef} onClick={onClose}>
                 Cancelar
               </Button>
               <Button

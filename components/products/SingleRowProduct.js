@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Button,
   Tr,
@@ -26,6 +26,7 @@ import { useForm } from "react-hook-form";
 import DeleteButton from "../buttons/DeleteButton";
 import AddPopularButton from "../buttons/AddPopularButton";
 import { updateProduct } from "../../firebase/services/products";
+import { uploadImages } from "../../firebase/services/image";
 
 export default function SingleRowProduct({
   id,
@@ -40,6 +41,11 @@ export default function SingleRowProduct({
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [productImages, setProductImages] = useState(images);
+  const [file, setFile] = useState("");
+
+  useEffect(() => {
+    file && uploadImages(file, productImages, setProductImages);
+  }, [file]);
 
   const {
     register,
@@ -94,7 +100,7 @@ export default function SingleRowProduct({
           <ModalBody>
             <form
               onSubmit={handleSubmit((data) => {
-                updateProduct(id, { productImages, ...data });
+                updateProduct(id, { images: productImages, ...data });
                 onClose();
               })}
             >
@@ -135,10 +141,29 @@ export default function SingleRowProduct({
                     </Flex>
                   ))}
                   <FormControl>
+                    <FormLabel
+                      m={"10px 0px"}
+                      cursor="pointer"
+                      htmlFor="uploadProductImage"
+                    >
+                      <Box
+                        borderRadius={"10px"}
+                        p={"10px 0px"}
+                        w={"100%"}
+                        bg={"secondary.100"}
+                      >
+                        <Text color={"#000"} textAlign={"center"}>
+                          Subir imagen
+                        </Text>
+                      </Box>
+                    </FormLabel>
+
+                    {/* hide input file */}
                     <Input
                       type="file"
-                      name="Add photo"
-                      id="productImage"
+                      accept="image/png, image/jpeg, image/jpg"
+                      name="addPhoto"
+                      id="uploadProductImage"
                       onChange={(e) => {
                         setFile(e.target.files[0]);
                       }}
@@ -192,6 +217,7 @@ export default function SingleRowProduct({
                   <FormControl>
                     <FormLabel>Categoria </FormLabel>
                     <Select
+                      color={"#000"}
                       cursor={"pointer"}
                       {...register("category", {
                         required: "Campo obligatorio",
@@ -224,7 +250,13 @@ export default function SingleRowProduct({
                 </VStack>
               </Flex>
               <Flex justify={"center"} py={"20px"}>
-                <Button variant={"primary"} w={"full"} type="submit">
+                <Button
+                  fontSize={"20px"}
+                  variant={"primary"}
+                  w={"full"}
+                  p={"30px 0px"}
+                  type="submit"
+                >
                   Guardar cambios
                 </Button>
               </Flex>
