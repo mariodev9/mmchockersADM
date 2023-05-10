@@ -33,8 +33,8 @@ import {
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBMNUBFwHEotpuIVuMX3MgqpvbhiZThGd0",
-  authDomain: "mmchokers-e1895.firebaseapp.com",
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
   projectId: "mmchokers-e1895",
   storageBucket: "mmchokers-e1895.appspot.com",
   messagingSenderId: "361906327730",
