@@ -161,6 +161,9 @@ export default function Layout({ children }) {
               </Flex>
             </Link>
           ))}
+          <Button bg={"#000"} onClick={() => logOut()} color={"#fff"}>
+            Cerrar Sesion
+          </Button>
         </Box>
 
         <Box

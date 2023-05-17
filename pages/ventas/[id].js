@@ -70,7 +70,7 @@ export default function SingleSellPage() {
               <WraperTitle>Productos comprados</WraperTitle>
               <Flex direction={"column"}>
                 {saleData.cart.map((product) => (
-                  <Flex justify={"space-between"} mt={"10px"}>
+                  <Flex key={product.id} justify={"space-between"} mt={"10px"}>
                     <Box width={"70px"} height={"70px"} pos={"relative"}>
                       <Image
                         src={product.images[0]}
