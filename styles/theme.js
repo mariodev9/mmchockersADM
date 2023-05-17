@@ -59,9 +59,10 @@ export const theme = extendTheme({
       },
       variants: {
         primary: {
-          bg: "#4FD1C5",
+          bg: "#ffd30c",
           color: "#000",
-          fontSize: "md",
+          fontWeight: 700,
+          fontSize: "larger",
           padding: "16px 24px",
           _hover: {
             bg: "#3ba0f9",

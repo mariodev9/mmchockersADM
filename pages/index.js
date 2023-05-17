@@ -46,28 +46,36 @@ export default function Home() {
       </Head>
       <Flex justify={"center"} p={"30px 20px"}>
         <form>
-          <VStack justify={"center"} w={{ base: "100%", tablet: "400px" }}>
-            <Box m={"60px"}>
-              <Logo />
-            </Box>
+          <Box m={"60px"}>
+            <Logo />
+          </Box>
+          <VStack spacing={5} w={{ base: "100%", tablet: "400px" }}>
             <FormControl>
-              <FormLabel>Email </FormLabel>
+              <FormLabel color={"#000"} mt="10px">
+                Email
+              </FormLabel>
               <Input
                 id="loginEmail"
                 type={"email"}
                 w={"100%"}
-                border={"2px solid gray"}
+                color={"#000"}
+                placeholder="asd123@gmail.com"
+                bg={"#fff"}
                 {...register("email")}
               />
             </FormControl>
 
             <FormControl>
-              <FormLabel mt="10px">Contraseña </FormLabel>
+              <FormLabel color={"#000"} mt="10px">
+                Contraseña
+              </FormLabel>
               <Input
                 id="loginPassword"
                 type={"password"}
                 w={"100%"}
-                border={"2px solid gray"}
+                bg={"#fff"}
+                color={"#000"}
+                placeholder="Contraseña"
                 {...register("password")}
               />
             </FormControl>
@@ -78,7 +86,6 @@ export default function Home() {
               })}
               w="full"
               variant={"primary"}
-              color={"#fff"}
             >
               Iniciar Sesion
             </Button>

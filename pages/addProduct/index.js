@@ -17,17 +17,22 @@ import {
   HStack,
   Grid,
   GridItem,
+  Spinner,
 } from "@chakra-ui/react";
 import { Controller, useForm } from "react-hook-form";
 import { addProduct } from "../../firebase/services/products";
 import { uploadImages } from "../../firebase/services/image";
 import Layout from "../../components/layout";
 import Image from "next/image";
+import useUser from "../../hooks/useUser";
+import PageSpinner from "../../components/common/PageSpinner/PageSpinner";
 
 export default function AddProductPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [file, setFile] = useState("");
   const [images, setImages] = useState([]);
+
+  const user = useUser();
 
   useEffect(() => {
     file && uploadImages(file, images, setImages);
@@ -71,179 +76,188 @@ export default function AddProductPage() {
   };
 
   return (
-    <Layout>
-      <form
-        onSubmit={handleSubmit((data) => {
-          addProduct(
-            { images, ...data },
-            succesfullCreated,
-            errorCreatingProduct
-          );
-          onClose();
-        })}
-      >
-        <Flex direction={"column"} align={"center"}>
-          {/* Imagenes */}
-          <Flex
-            w={{ base: "100%", tablet: "50%" }}
-            p={"0px 15px"}
-            direction={"column"}
+    <>
+      {user ? (
+        <Layout>
+          <form
+            onSubmit={handleSubmit((data) => {
+              addProduct(
+                { images, ...data },
+                succesfullCreated,
+                errorCreatingProduct
+              );
+              onClose();
+            })}
           >
-            <FormControl>
+            <Flex direction={"column"} align={"center"}>
+              {/* Imagenes */}
               <Flex
+                w={{ base: "100%", tablet: "50%" }}
+                p={"0px 15px"}
                 direction={"column"}
-                justify={"center"}
-                border={"1px solid #666"}
-                align={"center"}
-                h={"200px"}
               >
-                <Text textAlign={"center"} fontSize={"3xl"}>
-                  Subir Imagenes
-                </Text>
-                <Text color={"#777"} textAlign={"center"}>
-                  (JPG - JPEG - PNG)
-                </Text>
-                <FormLabel
-                  mt={"10px"}
-                  htmlFor="productImage"
-                  cursor="pointer"
-                  borderRadius={"10px"}
-                  p={"8px 80px"}
-                  bg={"green.300"}
-                >
-                  Subir
-                </FormLabel>
-                <Input
-                  type="file"
-                  accept="image/png, image/jpeg, image/jpg"
-                  name="addPhoto"
-                  id="productImage"
-                  onChange={(e) => {
-                    setFile(e.target.files[0]);
-                  }}
-                  display="none"
-                />
+                <FormControl>
+                  <Flex
+                    direction={"column"}
+                    justify={"center"}
+                    border={"1px solid #666"}
+                    align={"center"}
+                    h={"200px"}
+                  >
+                    <Text textAlign={"center"} fontSize={"3xl"}>
+                      Subir Imagenes
+                    </Text>
+                    <Text color={"#777"} textAlign={"center"}>
+                      (JPG - JPEG - PNG)
+                    </Text>
+                    <FormLabel
+                      mt={"10px"}
+                      htmlFor="productImage"
+                      cursor="pointer"
+                      borderRadius={"10px"}
+                      p={"8px 80px"}
+                      bg={"green.300"}
+                    >
+                      Subir
+                    </FormLabel>
+                    <Input
+                      type="file"
+                      accept="image/png, image/jpeg, image/jpg"
+                      name="addPhoto"
+                      id="productImage"
+                      onChange={(e) => {
+                        setFile(e.target.files[0]);
+                      }}
+                      display="none"
+                    />
+                  </Flex>
+                </FormControl>
+
+                {images.map((image, index) => (
+                  <Box key={image} pos={"relative"} w={"full"} h={"250px"}>
+                    <Image
+                      alt="product"
+                      src={image}
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                    <Button
+                      bg={"red.600"}
+                      onClick={() => handleDeleteImg(index)}
+                    >
+                      X
+                    </Button>
+                  </Box>
+                ))}
               </Flex>
-            </FormControl>
 
-            {images.map((image, index) => (
-              <Box key={image} pos={"relative"} w={"full"} h={"250px"}>
-                <Image
-                  alt="product"
-                  src={image}
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <Button bg={"red.600"} onClick={() => handleDeleteImg(index)}>
-                  X
-                </Button>
-              </Box>
-            ))}
-          </Flex>
+              <VStack spacing={"15px"} w={{ base: "100%", tablet: "50%" }}>
+                {/* Nombre del producto */}
+                <FormControl id="name">
+                  <FormLabel>Nombre </FormLabel>
+                  <Input
+                    bg={"#fff"}
+                    type="text"
+                    {...register("name", {
+                      required: "Campo obligatorio",
+                    })}
+                  />
+                  <Text color="red.600">{errors.name?.message}</Text>
+                </FormControl>
 
-          <VStack spacing={"15px"} w={{ base: "100%", tablet: "50%" }}>
-            {/* Nombre del producto */}
-            <FormControl id="name">
-              <FormLabel>Nombre </FormLabel>
-              <Input
-                bg={"#fff"}
-                type="text"
-                {...register("name", {
-                  required: "Campo obligatorio",
-                })}
-              />
-              <Text color="red.600">{errors.name?.message}</Text>
-            </FormControl>
+                {/* Descripcion */}
+                <FormControl>
+                  <FormLabel>Descripcion</FormLabel>
+                  <Input
+                    bg={"#fff"}
+                    type="text"
+                    {...register("description", {
+                      required: "Campo obligatorio",
+                      minLength: {
+                        value: 10,
+                        message: "Minimo debe tener 10 digitos",
+                      },
+                    })}
+                  />
+                  <Text color="red.600">{errors.description?.message}</Text>
+                </FormControl>
 
-            {/* Descripcion */}
-            <FormControl>
-              <FormLabel>Descripcion</FormLabel>
-              <Input
-                bg={"#fff"}
-                type="text"
-                {...register("description", {
-                  required: "Campo obligatorio",
-                  minLength: {
-                    value: 10,
-                    message: "Minimo debe tener 10 digitos",
-                  },
-                })}
-              />
-              <Text color="red.600">{errors.description?.message}</Text>
-            </FormControl>
+                {/* Precio */}
+                <FormControl>
+                  <FormLabel>Precio </FormLabel>
+                  <Input
+                    bg={"#fff"}
+                    placeholder="$"
+                    type="number"
+                    {...register("price", {
+                      required: "Campo obligatorio",
+                    })}
+                  />
+                  <Text color="red.600">{errors.price?.message}</Text>
+                </FormControl>
 
-            {/* Precio */}
-            <FormControl>
-              <FormLabel>Precio </FormLabel>
-              <Input
-                bg={"#fff"}
-                placeholder="$"
-                type="number"
-                {...register("price", {
-                  required: "Campo obligatorio",
-                })}
-              />
-              <Text color="red.600">{errors.price?.message}</Text>
-            </FormControl>
+                {/* Stock */}
+                <FormControl>
+                  <FormLabel>Stock </FormLabel>
+                  <Input
+                    bg={"#fff"}
+                    placeholder="Numero de stock"
+                    type="number"
+                    {...register("stock", {
+                      required: "Campo obligatorio",
+                    })}
+                  />
+                  <Text color="red.600">{errors.stock?.message}</Text>
+                </FormControl>
+                {/* Categorias */}
+                <FormControl>
+                  <Controller
+                    name="category"
+                    control={control}
+                    render={({ field: { ref, ...rest } }) => (
+                      <CheckboxGroup {...rest}>
+                        <Grid templateColumns={"repeat(3, 1fr)"}>
+                          <Checkbox value="Collares">Collares</Checkbox>
+                          <Checkbox value="Cadenas">Cadenas</Checkbox>
+                          <Checkbox value="Pulseras">Pulseras</Checkbox>
+                          <Checkbox value="Billeteras">Billeteras</Checkbox>
+                          <Checkbox value="Sets">Sets</Checkbox>
+                          <Checkbox value="Black Site">Black Site</Checkbox>
+                        </Grid>
+                      </CheckboxGroup>
+                    )}
+                  />
+                </FormControl>
 
-            {/* Stock */}
-            <FormControl>
-              <FormLabel>Stock </FormLabel>
-              <Input
-                bg={"#fff"}
-                placeholder="Numero de stock"
-                type="number"
-                {...register("stock", {
-                  required: "Campo obligatorio",
-                })}
-              />
-              <Text color="red.600">{errors.stock?.message}</Text>
-            </FormControl>
-            {/* Categorias */}
-            <FormControl>
-              <Controller
-                name="category"
-                control={control}
-                render={({ field: { ref, ...rest } }) => (
-                  <CheckboxGroup {...rest}>
-                    <Grid templateColumns={"repeat(3, 1fr)"}>
-                      <Checkbox value="Collares">Collares</Checkbox>
-                      <Checkbox value="Cadenas">Cadenas</Checkbox>
-                      <Checkbox value="Pulseras">Pulseras</Checkbox>
-                      <Checkbox value="Billeteras">Billeteras</Checkbox>
-                      <Checkbox value="Sets">Sets</Checkbox>
-                      <Checkbox value="Black Site">Black Site</Checkbox>
-                    </Grid>
-                  </CheckboxGroup>
-                )}
-              />
-            </FormControl>
+                {/* Medidas */}
+                <FormControl>
+                  <FormLabel>Medidas</FormLabel>
+                  <Input bg={"#fff"} type="number" {...register("measures")} />
+                  <Text color="red.600">{errors.name?.message}</Text>
+                </FormControl>
 
-            {/* Medidas */}
-            <FormControl>
-              <FormLabel>Medidas</FormLabel>
-              <Input bg={"#fff"} type="number" {...register("measures")} />
-              <Text color="red.600">{errors.name?.message}</Text>
-            </FormControl>
-
-            {/* Colores */}
-            <FormControl>
-              <FormLabel>Colores</FormLabel>
-              <Input
-                bg={"#fff"}
-                type="text"
-                {...register("colors", {
-                  required: "Campo obligatorio",
-                })}
-              />
-              <Text color="red.600">{errors.description?.message}</Text>
-            </FormControl>
-          </VStack>
-        </Flex>
-        <Button mt={"20px"} variant={"primary"} w={"100%"} type="submit">
-          Crear Nuevo Producto
-        </Button>
-      </form>
-    </Layout>
+                {/* Colores */}
+                <FormControl>
+                  <FormLabel>Colores</FormLabel>
+                  <Input
+                    bg={"#fff"}
+                    type="text"
+                    {...register("colors", {
+                      required: "Campo obligatorio",
+                    })}
+                  />
+                  <Text color="red.600">{errors.description?.message}</Text>
+                </FormControl>
+              </VStack>
+            </Flex>
+            <Button mt={"20px"} variant={"primary"} w={"100%"} type="submit">
+              Crear Nuevo Producto
+            </Button>
+          </form>
+        </Layout>
+      ) : (
+        <PageSpinner />
+      )}
+    </>
   );
 }

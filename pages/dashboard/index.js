@@ -23,6 +23,7 @@ import {
 import DashboardTop from "../../components/dashboard/DashboardTop";
 import LatestProducts from "../../components/dashboard/LatestProducts";
 import Layout from "../../components/layout";
+import PageSpinner from "../../components/common/PageSpinner/PageSpinner";
 
 const NavLinks = [
   {
@@ -55,14 +56,15 @@ export default function Home() {
 
   return (
     <>
-      <Layout>
-        <VStack spacing={10} align={"-moz-initial"}>
-          <Flex align={"end"} justify={"space-between"}>
-            <Text fontSize={"40px"} color="#000">
-              Dashboard
-            </Text>
+      {user ? (
+        <Layout>
+          <VStack spacing={10} align={"-moz-initial"}>
+            <Flex align={"end"} justify={"space-between"}>
+              <Text fontSize={"40px"} color="#000">
+                Dashboard
+              </Text>
 
-            {/* <InputGroup mb={"10px"} w={"40%"}>
+              {/* <InputGroup mb={"10px"} w={"40%"}>
               <Input
                 fontWeight={500}
                 color={"#000"}
@@ -76,43 +78,46 @@ export default function Home() {
                 <SearchIcon />
               </InputRightElement>
             </InputGroup> */}
-          </Flex>
-          <Grid
-            templateColumns={{
-              base: "repeat(1, 1fr)",
-              desktop: "repeat(3, 1fr)",
-            }}
-            gap={6}
-            color={"#000"}
-          >
-            <BoxInformation>
-              <Text fontWeight={600} fontSize={"18px"}>
-                Total spend in 2022
-              </Text>
-              <Text fontWeight={700} fontSize={"26px"}>
-                $ 50.000
-              </Text>
-            </BoxInformation>
-            <BoxInformation>
-              <Text fontWeight={600} fontSize={"18px"}>
-                Total savings in 2022{" "}
-              </Text>
-              <Text fontWeight={700} fontSize={"26px"}>
-                $ 2.000
-              </Text>
-            </BoxInformation>
-            <BoxInformation>
-              <Text fontWeight={600} fontSize={"18px"}>
-                Total sales
-              </Text>
-              <Text fontWeight={700} fontSize={"26px"}>
-                2
-              </Text>
-            </BoxInformation>
-          </Grid>
-          <LatestProducts />
-        </VStack>
-      </Layout>
+            </Flex>
+            <Grid
+              templateColumns={{
+                base: "repeat(1, 1fr)",
+                desktop: "repeat(3, 1fr)",
+              }}
+              gap={6}
+              color={"#000"}
+            >
+              <BoxInformation>
+                <Text fontWeight={600} fontSize={"18px"}>
+                  Total spend in 2022
+                </Text>
+                <Text fontWeight={700} fontSize={"26px"}>
+                  $ 50.000
+                </Text>
+              </BoxInformation>
+              <BoxInformation>
+                <Text fontWeight={600} fontSize={"18px"}>
+                  Total savings in 2022{" "}
+                </Text>
+                <Text fontWeight={700} fontSize={"26px"}>
+                  $ 2.000
+                </Text>
+              </BoxInformation>
+              <BoxInformation>
+                <Text fontWeight={600} fontSize={"18px"}>
+                  Total sales
+                </Text>
+                <Text fontWeight={700} fontSize={"26px"}>
+                  2
+                </Text>
+              </BoxInformation>
+            </Grid>
+            <LatestProducts />
+          </VStack>
+        </Layout>
+      ) : (
+        <PageSpinner />
+      )}
     </>
   );
 }

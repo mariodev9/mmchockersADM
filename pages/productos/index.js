@@ -12,6 +12,7 @@ import {
   Select,
   InputGroup,
   Button,
+  Spinner,
 } from "@chakra-ui/react";
 import { getAllProducts } from "../../firebase/services/products";
 import SingleRowProduct from "../../components/products/SingleRowProduct";
@@ -19,10 +20,13 @@ import { FilterIcon } from "../../components/common/iconos";
 import DashboardTop from "../../components/dashboard/DashboardTop";
 import Layout from "../../components/layout";
 import { useForm } from "react-hook-form";
+import useUser from "../../hooks/useUser";
 
 export default function Productos() {
   const [products, setProducts] = useState([]);
   const [productsFilter, setProductsFiltred] = useState([]);
+
+  const user = useUser();
 
   const {
     register,
@@ -115,76 +119,82 @@ export default function Productos() {
 
   return (
     <>
-      <Layout>
-        <DashboardTop title={"Todos los productos"} />
-        <TableContainer color={"#000"} layerStyle={"primaryBox"} mt="15px">
-          <Table variant="simple">
-            <Thead>
-              <Tr>
-                <Th>
-                  <Flex direction={"column"} gap={3}>
-                    <InputGroup>
-                      <Input
-                        placeholder="Filtrar por nombre"
-                        {...register("nameFilterValue")}
-                      />
-                      <FilterButton />
-                    </InputGroup>
-                    <Text>Nombre</Text>
-                  </Flex>
-                </Th>
-                <Th>
-                  <Flex direction={"column"} gap={3}>
-                    <InputGroup>
-                      <Input
-                        type={"number"}
-                        {...register("priceFilterValue")}
-                        placeholder="Filtrar por precio"
-                      />
+      {user ? (
+        <Layout>
+          <DashboardTop title={"Todos los productos"} />
+          <TableContainer color={"#000"} layerStyle={"primaryBox"} mt="15px">
+            <Table variant="simple">
+              <Thead>
+                <Tr>
+                  <Th>
+                    <Flex direction={"column"} gap={3}>
+                      <InputGroup>
+                        <Input
+                          placeholder="Filtrar por nombre"
+                          {...register("nameFilterValue")}
+                        />
+                        <FilterButton />
+                      </InputGroup>
+                      <Text>Nombre</Text>
+                    </Flex>
+                  </Th>
+                  <Th>
+                    <Flex direction={"column"} gap={3}>
+                      <InputGroup>
+                        <Input
+                          type={"number"}
+                          {...register("priceFilterValue")}
+                          placeholder="Filtrar por precio"
+                        />
 
-                      <FilterButton />
-                    </InputGroup>
-                    <Text>Precio</Text>
-                  </Flex>
-                </Th>
-                <Th>
-                  <Flex direction={"column"} gap={3}>
-                    <InputGroup>
-                      <Select
-                        {...register("categoryFilterValue")}
-                        defaultValue={"Cadenas"}
-                      >
-                        <option value="Cadenas">Cadenas</option>
-                        <option value="Collares">Collares</option>
-                        <option value="Pulseras">Pulseras</option>
-                      </Select>
+                        <FilterButton />
+                      </InputGroup>
+                      <Text>Precio</Text>
+                    </Flex>
+                  </Th>
+                  <Th>
+                    <Flex direction={"column"} gap={3}>
+                      <InputGroup>
+                        <Select
+                          {...register("categoryFilterValue")}
+                          defaultValue={"Cadenas"}
+                        >
+                          <option value="Cadenas">Cadenas</option>
+                          <option value="Collares">Collares</option>
+                          <option value="Pulseras">Pulseras</option>
+                        </Select>
 
-                      <FilterButton />
-                    </InputGroup>
-                    <Text>Categoria</Text>
-                  </Flex>
-                </Th>
-                <Th />
-                <Th />
-                <Th pb={10}>
-                  <Button
-                    variant={"secondary"}
-                    _hover={{ color: "#000" }}
-                    onClick={() => CleanFilters()}
-                  >
-                    Limpiar filtros
-                  </Button>
-                </Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {productsFilter.map((item) => (
-                <SingleRowProduct key={item.id} {...item} />
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
-      </Layout>
+                        <FilterButton />
+                      </InputGroup>
+                      <Text>Categoria</Text>
+                    </Flex>
+                  </Th>
+                  <Th />
+                  <Th />
+                  <Th pb={10}>
+                    <Button
+                      variant={"secondary"}
+                      _hover={{ color: "#000" }}
+                      onClick={() => CleanFilters()}
+                    >
+                      Limpiar filtros
+                    </Button>
+                  </Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {productsFilter.map((item) => (
+                  <SingleRowProduct key={item.id} {...item} />
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        </Layout>
+      ) : (
+        <Flex justify={"center"} align={"center"} h={"100vh"}>
+          <Spinner color="#ffd30c" />
+        </Flex>
+      )}
     </>
   );
 }
