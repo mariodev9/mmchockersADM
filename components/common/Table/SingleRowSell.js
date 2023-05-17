@@ -1,7 +1,11 @@
 import React from "react";
 import { Tr, Td, Text, Flex, Button } from "@chakra-ui/react";
-import { ArrowLeftIcon, DoneIcon, PendingIcon } from "../iconos";
+import { ArrowLeftIcon, DoneIcon, PendingIcon, WrongIcon } from "../iconos";
 import { useRouter } from "next/router";
+import {
+  changePaymentStatusSale,
+  changeShippingStatusSale,
+} from "../../../firebase/services/sales";
 
 const TdRow = ({ children }) => (
   <Td borderColor={"#fff"} pt={2} pb={2}>
@@ -9,43 +13,118 @@ const TdRow = ({ children }) => (
   </Td>
 );
 
-const StatusBox = ({ status }) => (
-  <>
-    {status === "Done" ? (
-      <Flex
-        justify={"center"}
-        gap={2}
-        borderRadius={"5px"}
-        p={"5px"}
-        bg={"#EDF9E7"}
-      >
-        <DoneIcon />
+// El estado de envio tiene 3 opciones: No enviado, Enviado y Recibido
+// El usuario clickea la caja para cambiar de estado,
+// El cambio de estados es en BUCLE: NOT_SEND => SENT => RECEIVED => NOT_SENT ...
+const StatusShippingBox = ({ sellId, status }) => {
+  // Refactor Flex Component
 
-        <Text align={"center"} color={"#82A36E"}>
-          Hecho
-        </Text>
-      </Flex>
-    ) : (
-      <Flex
-        justify={"center"}
-        gap={2}
-        borderRadius={"5px"}
-        p={"5px"}
-        bg={"#F0FDFE"}
-      >
-        <PendingIcon />
-        <Text align={"center"} color={"#6EA6B3"}>
-          Pendiente
-        </Text>
-      </Flex>
-    )}
-  </>
-);
+  const SHIPPING_STATE = {
+    NOT_SENT: -1,
+    SENT: 0,
+    RECEIVED: 1,
+  };
+
+  return (
+    <>
+      {status === SHIPPING_STATE.NOT_SENT ? (
+        <Flex
+          cursor={"pointer"}
+          onClick={() => changeShippingStatusSale(sellId, (status = 0))}
+          justify={"center"}
+          gap={2}
+          borderRadius={"5px"}
+          p={"5px 10px"}
+          bg={"#FFDDDF"}
+        >
+          <WrongIcon />
+
+          <Text align={"center"} color={"#FFAEB3"}>
+            No enviado
+          </Text>
+        </Flex>
+      ) : status === SHIPPING_STATE.SENT ? (
+        <Flex
+          cursor={"pointer"}
+          onClick={() => changeShippingStatusSale(sellId, (status = 1))}
+          justify={"center"}
+          gap={2}
+          borderRadius={"5px"}
+          p={"5px"}
+          bg={"#FFF9DF"}
+        >
+          <PendingIcon stroke={"#FFD526"} />
+          <Text align={"center"} color={"#FFD526"}>
+            En camino
+          </Text>
+        </Flex>
+      ) : (
+        <Flex
+          cursor={"pointer"}
+          onClick={() => changeShippingStatusSale(sellId, (status = -1))}
+          justify={"center"}
+          gap={2}
+          borderRadius={"5px"}
+          p={"5px"}
+          bg={"#EDF9E7"}
+        >
+          <DoneIcon />
+
+          <Text align={"center"} color={"#82A36E"}>
+            Recibido
+          </Text>
+        </Flex>
+      )}
+    </>
+  );
+};
+
+const StatusPaymentBox = ({ sellId, status }) => {
+  // Refactor Flex Component
+
+  return (
+    <>
+      {status === "Done" ? (
+        <Flex
+          cursor={"pointer"}
+          onClick={() => changePaymentStatusSale(sellId, (status = "Pending"))}
+          justify={"center"}
+          gap={2}
+          borderRadius={"5px"}
+          p={"5px"}
+          bg={"#EDF9E7"}
+        >
+          <DoneIcon />
+
+          <Text align={"center"} color={"#82A36E"}>
+            Hecho
+          </Text>
+        </Flex>
+      ) : (
+        <Flex
+          cursor={"pointer"}
+          onClick={() => changePaymentStatusSale(sellId, (status = "Done"))}
+          justify={"center"}
+          gap={2}
+          borderRadius={"5px"}
+          p={"5px"}
+          bg={"#F0FDFE"}
+        >
+          <PendingIcon />
+          <Text align={"center"} color={"#6EA6B3"}>
+            Pendiente
+          </Text>
+        </Flex>
+      )}
+    </>
+  );
+};
 
 export default function SingleRowSell({
   id,
   totalPayment,
   paymentStatus,
+  shippingStatus,
   date,
   buyerData,
 }) {
@@ -59,13 +138,21 @@ export default function SingleRowSell({
 
       {/* cambiar a totalAmount */}
       <TdRow>$ {totalPayment}</TdRow>
-      <TdRow>
-        <StatusBox status={paymentStatus} />
-      </TdRow>
+
       <TdRow>{date}</TdRow>
       <TdRow>
-        <Button onClick={() => router.push(`ventas/${id}`)}>
-          <ArrowLeftIcon />
+        <StatusPaymentBox sellId={id} status={paymentStatus} />
+      </TdRow>
+      <TdRow>
+        <StatusShippingBox sellId={id} status={shippingStatus} />
+      </TdRow>
+      <TdRow>
+        <Button
+          bg={"#333"}
+          _hover={{ bg: "#000" }}
+          onClick={() => router.push(`ventas/${id}`)}
+        >
+          <ArrowLeftIcon stroke={"#fff"} />
         </Button>
       </TdRow>
     </Tr>

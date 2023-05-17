@@ -11,8 +11,14 @@ import {
   Box,
   Select,
   useToast,
+  Stack,
+  CheckboxGroup,
+  Checkbox,
+  HStack,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { addProduct } from "../../firebase/services/products";
 import { uploadImages } from "../../firebase/services/image";
 import Layout from "../../components/layout";
@@ -55,6 +61,7 @@ export default function AddProductPage() {
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -76,6 +83,7 @@ export default function AddProductPage() {
         })}
       >
         <Flex direction={"column"} align={"center"}>
+          {/* Imagenes */}
           <Flex
             w={{ base: "100%", tablet: "50%" }}
             p={"0px 15px"}
@@ -193,7 +201,7 @@ export default function AddProductPage() {
             </FormControl>
 
             {/* Categoria */}
-            <FormControl>
+            {/* <FormControl>
               <FormLabel>Categoria </FormLabel>
               <Select
                 bg={"#fff"}
@@ -208,6 +216,25 @@ export default function AddProductPage() {
                 <option value="Billeteras">Billeteras</option>
               </Select>
               <Text color="red.600">{errors.category?.message}</Text>
+            </FormControl> */}
+
+            <FormControl>
+              <Controller
+                name="category"
+                control={control}
+                render={({ field: { ref, ...rest } }) => (
+                  <CheckboxGroup {...rest}>
+                    <Grid templateColumns={"repeat(3, 1fr)"}>
+                      <Checkbox value="Collares">Collares</Checkbox>
+                      <Checkbox value="Cadenas">Cadenas</Checkbox>
+                      <Checkbox value="Pulseras">Pulseras</Checkbox>
+                      <Checkbox value="Billeteras">Billeteras</Checkbox>
+                      <Checkbox value="Sets">Sets</Checkbox>
+                      <Checkbox value="Black Site">Black Site</Checkbox>
+                    </Grid>
+                  </CheckboxGroup>
+                )}
+              />
             </FormControl>
 
             {/* Medidas */}

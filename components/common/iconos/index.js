@@ -713,10 +713,11 @@ export const PendingIcon = (props) => {
       height="22"
       viewBox="0 0 22 22"
       fill="none"
+      stroke="#6EA6B3"
+      {...props}
     >
       <path
         d="M11 7.33333V11L13.75 13.75M7.84668 3.3825C6.84576 3.79682 5.93623 4.40421 5.17001 5.17M3.3825 7.84666C2.96684 8.8461 2.75193 9.91757 2.75 11M3.38245 14.1533C3.79677 15.1543 4.40416 16.0638 5.16995 16.83M7.84672 18.6175C8.84616 19.0332 9.91763 19.2481 11.0001 19.25M14.1533 18.6175C15.1542 18.2032 16.0637 17.5958 16.8299 16.83M18.6176 14.1533C19.0332 13.1539 19.2481 12.0824 19.2501 11M18.6175 7.84668C18.2032 6.84576 17.5958 5.93623 16.83 5.17001M14.1533 3.3825C13.1539 2.96684 12.0824 2.75193 11 2.75"
-        stroke="#6EA6B3"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -753,13 +754,35 @@ export const ArrowLeftIcon = (props) => {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
+      stroke="black"
+      {...props}
     >
       <path
         d="M5 12H19M5 12L11 18M5 12L11 6"
-        stroke="black"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const WrongIcon = (props) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="22"
+      height="22"
+      viewBox="0 0 22 22"
+      fill="none"
+      stroke="#FF9097"
+      {...props}
+    >
+      <path
+        d="M10 10L14 14M14 10L10 14M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

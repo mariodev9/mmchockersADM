@@ -20,9 +20,12 @@ import {
   FormLabel,
   Select,
   Text,
+  CheckboxGroup,
+  Checkbox,
+  Grid,
 } from "@chakra-ui/react";
 import { Edit, Like, LinkIcon, PhotoIcon, Trash } from "../common/iconos";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import DeleteButton from "../buttons/DeleteButton";
 import AddPopularButton from "../buttons/AddPopularButton";
 import { updateProduct } from "../../firebase/services/products";
@@ -36,6 +39,8 @@ export default function SingleRowProduct({
   popular,
   images,
   description,
+  colors,
+  measures,
 }) {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -51,12 +56,15 @@ export default function SingleRowProduct({
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors },
   } = useForm({
     defaultValues: {
       name,
       price,
       description,
+      colors,
+      measures,
     },
   });
 
@@ -181,8 +189,8 @@ export default function SingleRowProduct({
                         required: "Campo obligatorio",
                       })}
                     />
+                    <Text color="red.600">{errors.name?.message}</Text>
                   </FormControl>
-                  <Text color="red.600">{errors.name?.message}</Text>
 
                   {/* Description input */}
                   <FormControl>
@@ -197,8 +205,8 @@ export default function SingleRowProduct({
                         },
                       })}
                     />
+                    <Text color="red.600">{errors.description?.message}</Text>
                   </FormControl>
-                  <Text color="red.600">{errors.description?.message}</Text>
 
                   {/* Precio input */}
                   <FormControl>
@@ -210,11 +218,37 @@ export default function SingleRowProduct({
                         required: "Campo obligatorio",
                       })}
                     />
+                    <Text color="red.600">{errors.price?.message}</Text>
                   </FormControl>
-                  <Text color="red.600">{errors.price?.message}</Text>
+
+                  {/* Medidas */}
+                  <FormControl>
+                    <FormLabel>Medidas </FormLabel>
+                    <Input
+                      placeholder="Medidas"
+                      type="number"
+                      {...register("measures", {
+                        required: "Campo obligatorio",
+                      })}
+                    />
+                    <Text color="red.600">{errors.measures?.message}</Text>
+                  </FormControl>
+
+                  {/* Colores */}
+                  <FormControl>
+                    <FormLabel>Colores </FormLabel>
+                    <Input
+                      placeholder="Elige los colores. Ej: Blanco / Negro"
+                      type="text"
+                      {...register("colors", {
+                        required: "Campo obligatorio",
+                      })}
+                    />
+                    <Text color="red.600">{errors.colors?.message}</Text>
+                  </FormControl>
 
                   {/* Category input */}
-                  <FormControl>
+                  {/* <FormControl>
                     <FormLabel>Categoria </FormLabel>
                     <Select
                       color={"#000"}
@@ -245,8 +279,27 @@ export default function SingleRowProduct({
                         Billeteras
                       </option>
                     </Select>
+                    <Text color="red.600">{errors.category?.message}</Text>
+                  </FormControl> */}
+
+                  <FormControl>
+                    <Controller
+                      name="category"
+                      control={control}
+                      render={({ field: { ref, ...rest } }) => (
+                        <CheckboxGroup {...rest}>
+                          <Grid templateColumns={"repeat(3, 1fr)"}>
+                            <Checkbox value="Collares">Collares</Checkbox>
+                            <Checkbox value="Cadenas">Cadenas</Checkbox>
+                            <Checkbox value="Pulseras">Pulseras</Checkbox>
+                            <Checkbox value="Billeteras">Billeteras</Checkbox>
+                            <Checkbox value="Sets">Sets</Checkbox>
+                            <Checkbox value="Black Site">Black Site</Checkbox>
+                          </Grid>
+                        </CheckboxGroup>
+                      )}
+                    />
                   </FormControl>
-                  <Text color="red.600">{errors.category?.message}</Text>
                 </VStack>
               </Flex>
               <Flex justify={"center"} py={"20px"}>

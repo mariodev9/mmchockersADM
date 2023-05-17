@@ -40,7 +40,41 @@ export default function Productos() {
   function getFilterProducts() {
     let filtredProducts = products;
 
+    function CategoryFilter(array, categoryName) {
+      // Creamos un nuevo array donde almacenar los objetos que coincidan con la categoría
+      const productsFilters = [];
+
+      // Recorremos el array de objetos y verificamos si la categoría existe en el array de categorías
+      array.forEach((objeto) => {
+        if (objeto.category.includes(categoryName)) {
+          productsFilters.push(objeto);
+        }
+      });
+
+      // Devolvemos el array con los objetos filtrados
+      return productsFilters;
+    }
+
+    filtredProducts = CategoryFilter(
+      filtredProducts,
+      watchAllFields.categoryFilterValue
+    );
+
     // Filtro por precio
+
+    // function PriceFilter(array, categoryName) {
+    //   const objetosFiltrados = [];
+
+    //   array.forEach((objeto) => {
+    //     if (objeto.category.includes(categoryName)) {
+    //       objetosFiltrados.push(objeto);
+    //     }
+    //   });
+
+    //   return objetosFiltrados;
+    // }
+
+    // Filtro por precio Menor a:
     if (watchAllFields.priceFilterValue != 0) {
       filtredProducts = products.filter(
         (product) => product.price < watchAllFields.priceFilterValue
@@ -54,11 +88,6 @@ export default function Productos() {
         product.name.includes(word)
       );
     }
-
-    // Filtro por categorias
-    filtredProducts = filtredProducts.filter(
-      (product) => product.category === watchAllFields.categoryFilterValue
-    );
 
     return filtredProducts;
   }
@@ -149,7 +178,7 @@ export default function Productos() {
               </Tr>
             </Thead>
             <Tbody>
-              {productsFilter.map((item, key) => (
+              {productsFilter.map((item) => (
                 <SingleRowProduct key={item.id} {...item} />
               ))}
             </Tbody>
