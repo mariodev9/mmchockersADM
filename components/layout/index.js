@@ -128,43 +128,53 @@ export default function Layout({ children }) {
     <>
       <MobileNavbar />
       <Flex>
-        <Box
+        <Flex
+          direction={"column"}
+          justify={"space-between"}
           w={{ base: "0px", desktop: "20%" }}
-          display={{ base: "none", desktop: "block" }}
+          display={{ base: "none", desktop: "flex" }}
           h={"100vh"}
           p="30px 30px"
           bg={"#fff"}
           borderRight={"2px solid #f3f3f3"}
           color={"#000"}
         >
-          <Text
-            mb={"70px"}
-            fontSize={"2xl"}
-            fontWeight={700}
-            textTransform={"uppercase"}
-          >
+          <Text fontSize={"2xl"} fontWeight={700} textTransform={"uppercase"}>
             mmchokers
           </Text>
-          {NavLinks.map((item, key) => (
-            <Link key={item.title} href={item.link}>
-              <Flex
-                key={item.title}
-                align={"center"}
-                m={"20px 0px"}
-                cursor={"pointer"}
-              >
-                <Box w={"35px"} mr="5px">
-                  {item.icon}
-                </Box>
+          <Box>
+            {NavLinks.map((item, key) => (
+              <Link key={item.title} href={item.link}>
+                <Flex
+                  _hover={{ bg: "yellow.300" }}
+                  p={"10px 15px"}
+                  key={item.title}
+                  align={"center"}
+                  my={"5px "}
+                  borderRadius={"15px"}
+                  cursor={"pointer"}
+                >
+                  <Box w={"35px"} mr="5px">
+                    {item.icon}
+                  </Box>
 
-                <Text fontSize={"xl"}>{item.title}</Text>
-              </Flex>
-            </Link>
-          ))}
-          <Button bg={"#000"} onClick={() => logOut()} color={"#fff"}>
-            Cerrar Sesion
-          </Button>
-        </Box>
+                  <Text fontSize={"xl"}>{item.title}</Text>
+                </Flex>
+              </Link>
+            ))}
+          </Box>
+          <Flex>
+            <Button
+              flex={1}
+              bg={"#000"}
+              onClick={() => logOut()}
+              color={"#fff"}
+              _hover={{ bg: "red.300" }}
+            >
+              Cerrar Sesion
+            </Button>
+          </Flex>
+        </Flex>
 
         <Box
           w={{ base: "100%", desktop: "80%" }}
