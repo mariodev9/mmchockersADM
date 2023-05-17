@@ -1,6 +1,7 @@
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
   onSnapshot,
   orderBy,
@@ -10,15 +11,15 @@ import {
 import { firestore } from "../../firebaseConfig";
 
 // Cambia el estado de pago entre: "Hecho" y "Pendiente"
-export const changePaymentStatusSale = async (sellId, status) => {
-  const productRef = doc(firestore, "sales", sellId);
+export const changePaymentStatusSale = async (saleId, status) => {
+  const productRef = doc(firestore, "sales", saleId);
 
   await updateDoc(productRef, { paymentStatus: status });
 };
 
 // Cambia el estado de envio entre: "No enviado", "En camino" y "Recibido"
-export const changeShippingStatusSale = async (sellId, status) => {
-  const productRef = doc(firestore, "sales", sellId);
+export const changeShippingStatusSale = async (saleId, status) => {
+  const productRef = doc(firestore, "sales", saleId);
 
   await updateDoc(productRef, { shippingStatus: status });
 };
@@ -39,4 +40,15 @@ export const getAllSales = async (setSales) => {
     });
     setSales(allProducts);
   });
+};
+
+export const getSale = async (saveData, id) => {
+  const docRef = doc(firestore, "sales", id);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    saveData(docSnap.data());
+  } else {
+    console.log("No such document!");
+  }
 };

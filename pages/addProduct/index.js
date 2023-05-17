@@ -199,25 +199,7 @@ export default function AddProductPage() {
               />
               <Text color="red.600">{errors.stock?.message}</Text>
             </FormControl>
-
-            {/* Categoria */}
-            {/* <FormControl>
-              <FormLabel>Categoria </FormLabel>
-              <Select
-                bg={"#fff"}
-                cursor={"pointer"}
-                {...register("category", {
-                  required: "Campo obligatorio",
-                })}
-              >
-                <option value="Collares">Collares</option>
-                <option value="Cadenas">Cadenas</option>
-                <option value="Pulseras">Pulseras</option>
-                <option value="Billeteras">Billeteras</option>
-              </Select>
-              <Text color="red.600">{errors.category?.message}</Text>
-            </FormControl> */}
-
+            {/* Categorias */}
             <FormControl>
               <Controller
                 name="category"
@@ -240,13 +222,7 @@ export default function AddProductPage() {
             {/* Medidas */}
             <FormControl>
               <FormLabel>Medidas</FormLabel>
-              <Input
-                bg={"#fff"}
-                type="number"
-                {...register("measures", {
-                  required: "Campo obligatorio",
-                })}
-              />
+              <Input bg={"#fff"} type="number" {...register("measures")} />
               <Text color="red.600">{errors.name?.message}</Text>
             </FormControl>
 

@@ -16,7 +16,7 @@ const TdRow = ({ children }) => (
 // El estado de envio tiene 3 opciones: No enviado, Enviado y Recibido
 // El usuario clickea la caja para cambiar de estado,
 // El cambio de estados es en BUCLE: NOT_SEND => SENT => RECEIVED => NOT_SENT ...
-const StatusShippingBox = ({ sellId, status }) => {
+export const StatusShippingBox = ({ saleId, status }) => {
   // Refactor Flex Component
 
   const SHIPPING_STATE = {
@@ -30,7 +30,7 @@ const StatusShippingBox = ({ sellId, status }) => {
       {status === SHIPPING_STATE.NOT_SENT ? (
         <Flex
           cursor={"pointer"}
-          onClick={() => changeShippingStatusSale(sellId, (status = 0))}
+          onClick={() => changeShippingStatusSale(saleId, (status = 0))}
           justify={"center"}
           gap={2}
           borderRadius={"5px"}
@@ -46,7 +46,7 @@ const StatusShippingBox = ({ sellId, status }) => {
       ) : status === SHIPPING_STATE.SENT ? (
         <Flex
           cursor={"pointer"}
-          onClick={() => changeShippingStatusSale(sellId, (status = 1))}
+          onClick={() => changeShippingStatusSale(saleId, (status = 1))}
           justify={"center"}
           gap={2}
           borderRadius={"5px"}
@@ -61,7 +61,7 @@ const StatusShippingBox = ({ sellId, status }) => {
       ) : (
         <Flex
           cursor={"pointer"}
-          onClick={() => changeShippingStatusSale(sellId, (status = -1))}
+          onClick={() => changeShippingStatusSale(saleId, (status = -1))}
           justify={"center"}
           gap={2}
           borderRadius={"5px"}
@@ -79,7 +79,7 @@ const StatusShippingBox = ({ sellId, status }) => {
   );
 };
 
-const StatusPaymentBox = ({ sellId, status }) => {
+export const StatusPaymentBox = ({ saleId, status }) => {
   // Refactor Flex Component
 
   return (
@@ -87,7 +87,7 @@ const StatusPaymentBox = ({ sellId, status }) => {
       {status === "Done" ? (
         <Flex
           cursor={"pointer"}
-          onClick={() => changePaymentStatusSale(sellId, (status = "Pending"))}
+          onClick={() => changePaymentStatusSale(saleId, (status = "Pending"))}
           justify={"center"}
           gap={2}
           borderRadius={"5px"}
@@ -103,7 +103,7 @@ const StatusPaymentBox = ({ sellId, status }) => {
       ) : (
         <Flex
           cursor={"pointer"}
-          onClick={() => changePaymentStatusSale(sellId, (status = "Done"))}
+          onClick={() => changePaymentStatusSale(saleId, (status = "Done"))}
           justify={"center"}
           gap={2}
           borderRadius={"5px"}
@@ -132,7 +132,7 @@ export default function SingleRowSell({
 
   return (
     <Tr key={id} fontWeight={600}>
-      <TdRow>{id}</TdRow>
+      <TdRow>{id.slice(0, 6)}</TdRow>
       <TdRow>{buyerData.name}</TdRow>
       <TdRow>{buyerData.lastName}</TdRow>
 
@@ -141,10 +141,10 @@ export default function SingleRowSell({
 
       <TdRow>{date}</TdRow>
       <TdRow>
-        <StatusPaymentBox sellId={id} status={paymentStatus} />
+        <StatusPaymentBox saleId={id} status={paymentStatus} />
       </TdRow>
       <TdRow>
-        <StatusShippingBox sellId={id} status={shippingStatus} />
+        <StatusShippingBox saleId={id} status={shippingStatus} />
       </TdRow>
       <TdRow>
         <Button

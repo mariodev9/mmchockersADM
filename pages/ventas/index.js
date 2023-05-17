@@ -23,8 +23,6 @@ export default function VentasPage() {
     getAllSales(setSales);
   }, []);
 
-  console.log(allSales, "que trae");
-
   return (
     <Layout>
       <Box layerStyle={"primaryBox"}>
