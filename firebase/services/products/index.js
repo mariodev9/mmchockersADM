@@ -18,7 +18,7 @@ import {
 import { firestore } from "../../firebaseConfig";
 
 export const addProduct = (
-  { images, name, description, price, category, measures, colors },
+  { images, name, description, price, category, measures, colors, stock },
   succesfullCreated,
   errorCreatingProduct
 ) => {
@@ -33,6 +33,7 @@ export const addProduct = (
       popular: false,
       measures,
       colors,
+      stock,
     }).then(succesfullCreated());
   } catch (error) {
     errorCreatingProduct();

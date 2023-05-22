@@ -23,6 +23,7 @@ import {
   CheckboxGroup,
   Checkbox,
   Grid,
+  Toast,
 } from "@chakra-ui/react";
 import { Edit, Like, LinkIcon, PhotoIcon, Trash } from "../common/iconos";
 import { Controller, useForm } from "react-hook-form";
@@ -42,7 +43,6 @@ export default function SingleRowProduct({
   colors,
   measures,
 }) {
-  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [productImages, setProductImages] = useState(images);
@@ -65,8 +65,11 @@ export default function SingleRowProduct({
       description,
       colors,
       measures,
+      category,
     },
   });
+
+  const watchCategory = watch("category");
 
   const handleDeleteImg = (position) => {
     setProductImages(productImages.filter((item, index) => index != position));
@@ -113,7 +116,11 @@ export default function SingleRowProduct({
               })}
             >
               <Flex direction={{ base: "column", tablet: "row" }}>
-                <Flex w={"50%"} p={"0px 15px"} direction={"column"}>
+                <Flex
+                  w={{ base: "100%", tablet: "50%" }}
+                  p={"0px 15px"}
+                  direction={"column"}
+                >
                   <Text fontSize={"2xl"}>Imagenes</Text>
                   {productImages.map((image, index) => (
                     <Flex
@@ -179,7 +186,7 @@ export default function SingleRowProduct({
                     />
                   </FormControl>
                 </Flex>
-                <VStack spacing={"15px"} w={"50%"}>
+                <VStack spacing={"15px"} w={{ base: "100%", tablet: "50%" }}>
                   {/* Name input */}
                   <FormControl id="name">
                     <FormLabel>Nombre </FormLabel>
@@ -247,40 +254,18 @@ export default function SingleRowProduct({
                     <Text color="red.600">{errors.colors?.message}</Text>
                   </FormControl>
 
-                  {/* Category input */}
-                  {/* <FormControl>
-                    <FormLabel>Categoria </FormLabel>
-                    <Select
-                      color={"#000"}
-                      cursor={"pointer"}
-                      {...register("category", {
+                  {/* Stock */}
+                  <FormControl>
+                    <FormLabel>Stock </FormLabel>
+                    <Input
+                      placeholder="Stock del producto"
+                      type="number"
+                      {...register("stock", {
                         required: "Campo obligatorio",
                       })}
-                    >
-                      <option
-                        selected={category === "Collares"}
-                        value="Collares"
-                      >
-                        Collares
-                      </option>
-                      <option selected={category === "Cadenas"} value="Cadenas">
-                        Cadenas
-                      </option>
-                      <option
-                        selected={category === "Pulseras"}
-                        value="Pulseras"
-                      >
-                        Pulseras
-                      </option>
-                      <option
-                        selected={category === "Billeteras"}
-                        value="Billeteras"
-                      >
-                        Billeteras
-                      </option>
-                    </Select>
-                    <Text color="red.600">{errors.category?.message}</Text>
-                  </FormControl> */}
+                    />
+                    <Text color="red.600">{errors.colors?.message}</Text>
+                  </FormControl>
 
                   <FormControl>
                     <Controller
@@ -295,10 +280,15 @@ export default function SingleRowProduct({
                             <Checkbox value="Billeteras">Billeteras</Checkbox>
                             <Checkbox value="Sets">Sets</Checkbox>
                             <Checkbox value="Black Site">Black Site</Checkbox>
+                            <Checkbox value="Chokers">Chokers</Checkbox>
                           </Grid>
                         </CheckboxGroup>
                       )}
                     />
+                    <Text color={"red.400"}>
+                      {watchCategory.length === 0 &&
+                        "El producto debe tener una categoria"}
+                    </Text>
                   </FormControl>
                 </VStack>
               </Flex>
@@ -309,6 +299,7 @@ export default function SingleRowProduct({
                   w={"full"}
                   p={"30px 0px"}
                   type="submit"
+                  isDisabled={watchCategory.length === 0}
                 >
                   Guardar cambios
                 </Button>

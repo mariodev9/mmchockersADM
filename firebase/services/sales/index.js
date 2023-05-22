@@ -49,6 +49,6 @@ export const getSale = async (saveData, id) => {
   if (docSnap.exists()) {
     saveData(docSnap.data());
   } else {
-    console.log("No such document!");
+    // console.log("No such document!");
   }
 };

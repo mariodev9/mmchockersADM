@@ -3,21 +3,20 @@ import {
   Flex,
   Text,
   Button,
-  useDisclosure,
   VStack,
   FormControl,
   FormLabel,
   Input,
   Box,
-  Select,
   useToast,
-  Stack,
   CheckboxGroup,
   Checkbox,
-  HStack,
   Grid,
-  GridItem,
-  Spinner,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from "@chakra-ui/react";
 import { Controller, useForm } from "react-hook-form";
 import { addProduct } from "../../firebase/services/products";
@@ -26,12 +25,12 @@ import Layout from "../../components/layout";
 import Image from "next/image";
 import useUser from "../../hooks/useUser";
 import PageSpinner from "../../components/common/PageSpinner/PageSpinner";
+import { useRouter } from "next/router";
 
 export default function AddProductPage() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [file, setFile] = useState("");
   const [images, setImages] = useState([]);
-
+  const router = useRouter();
   const user = useUser();
 
   useEffect(() => {
@@ -86,7 +85,7 @@ export default function AddProductPage() {
                 succesfullCreated,
                 errorCreatingProduct
               );
-              onClose();
+              // router.push("/dashboard");
             })}
           >
             <Flex direction={"column"} align={"center"}>
@@ -209,6 +208,30 @@ export default function AddProductPage() {
                   />
                   <Text color="red.600">{errors.stock?.message}</Text>
                 </FormControl>
+
+                {/* <FormControl>
+                  <FormLabel>Stock </FormLabel>
+
+                  <NumberInput
+                    bg={"#fff"}
+                    step={1}
+                    maxW={100}
+                    defaultValue={1}
+                    min={0}
+                    max={20}
+                  >
+                    <NumberInputField
+                      {...register("stock", {
+                        required: "This field is required",
+                      })}
+                    />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper />
+                      <NumberDecrementStepper />
+                    </NumberInputStepper>
+                  </NumberInput>
+                </FormControl> */}
+
                 {/* Categorias */}
                 <FormControl>
                   <Controller
@@ -223,6 +246,7 @@ export default function AddProductPage() {
                           <Checkbox value="Billeteras">Billeteras</Checkbox>
                           <Checkbox value="Sets">Sets</Checkbox>
                           <Checkbox value="Black Site">Black Site</Checkbox>
+                          <Checkbox value="Chokers">Chokers</Checkbox>
                         </Grid>
                       </CheckboxGroup>
                     )}
