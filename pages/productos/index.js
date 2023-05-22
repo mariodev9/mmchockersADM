@@ -162,6 +162,10 @@ export default function Productos() {
                           <option value="Cadenas">Cadenas</option>
                           <option value="Collares">Collares</option>
                           <option value="Pulseras">Pulseras</option>
+                          <option value="Billeteras">Billeteras</option>
+                          <option value="Black Site">Black Site</option>
+                          <option value="Chokers">Chokers</option>
+                          <option value="Sets">Sets</option>
                         </Select>
 
                         <FilterButton />
