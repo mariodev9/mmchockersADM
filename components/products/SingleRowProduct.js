@@ -42,6 +42,7 @@ export default function SingleRowProduct({
   description,
   colors,
   measures,
+  stock
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -66,6 +67,7 @@ export default function SingleRowProduct({
       colors,
       measures,
       category,
+      stock,
     },
   });
 
