@@ -279,7 +279,7 @@ export default function SingleRowProduct({
                             <Checkbox value="Pulseras">Pulseras</Checkbox>
                             <Checkbox value="Billeteras">Billeteras</Checkbox>
                             <Checkbox value="Sets">Sets</Checkbox>
-                            <Checkbox value="Black Site">Black Site</Checkbox>
+                            <Checkbox value="BlackSite">Black Site</Checkbox>
                             <Checkbox value="Chokers">Chokers</Checkbox>
                           </Grid>
                         </CheckboxGroup>
