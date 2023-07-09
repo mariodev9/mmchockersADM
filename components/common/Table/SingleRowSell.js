@@ -122,29 +122,30 @@ export const StatusPaymentBox = ({ saleId, status }) => {
 
 export default function SingleRowSell({
   id,
-  totalPayment,
-  paymentStatus,
-  shippingStatus,
-  date,
-  buyerData,
+  buyerCard,
+  buyerForm,
+  status,
+  transaction,
 }) {
   const router = useRouter();
 
   return (
     <Tr key={id} fontWeight={600}>
       <TdRow>{id.slice(0, 6)}</TdRow>
-      <TdRow>{buyerData.name}</TdRow>
-      <TdRow>{buyerData.lastName}</TdRow>
+      <TdRow>{buyerForm.first_name}</TdRow>
+      <TdRow>{buyerForm.last_name}</TdRow>
 
       {/* cambiar a totalAmount */}
-      <TdRow>$ {totalPayment}</TdRow>
+      <TdRow>$ {transaction.totalAmount}</TdRow>
 
-      <TdRow>{date}</TdRow>
+      <TdRow>123</TdRow>
       <TdRow>
-        <StatusPaymentBox saleId={id} status={paymentStatus} />
+        {status}
+        {/* <StatusPaymentBox saleId={id} status={paymentStatus} /> */}
       </TdRow>
       <TdRow>
-        <StatusShippingBox saleId={id} status={shippingStatus} />
+        no enviado
+        {/* <StatusShippingBox saleId={id} status={shippingStatus} /> */}
       </TdRow>
       <TdRow>
         <Button

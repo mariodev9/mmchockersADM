@@ -22,6 +22,8 @@ export default function VentasPage() {
   const [allSales, setSales] = useState();
   const user = useUser();
 
+  console.log(allSales);
+
   useEffect(() => {
     getAllSales(setSales);
   }, []);

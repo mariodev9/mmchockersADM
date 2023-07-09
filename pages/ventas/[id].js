@@ -59,23 +59,25 @@ export default function SingleSellPage() {
                   <WraperTitle>Informacion del comprador</WraperTitle>
 
                   <Text>
-                    Nombre completo: {saleData.buyerData?.name}{" "}
-                    {saleData.buyerData.lastName} <br />
-                    DNI: {saleData.buyerData.dni} <br />
-                    E-mail: {saleData.buyerData.email} <br />
-                    Destino: {saleData.buyerData.adress}{" "}
-                    {saleData.buyerData.apartment &&
+                    Nombre completo: {saleData.buyerForm?.first_name}{" "}
+                    {saleData.buyerForm.last_name} <br />
+                    DNI: {saleData.buyerCard.identification.number} <br />
+                    E-mail: {saleData.buyerCard.email} <br />
+                    Destino: asd
+                    {/* {saleData.buyerData.adress} */}{" "}
+                    {/* {saleData.buyerData.apartment &&
                       `apartamento: ${saleData.buyerData.apartment}`}
                     {saleData.buyerData.adressNumber}, {saleData.buyerData.city}
-                    {", "}
-                    {saleData.buyerData.province} <br />
-                    Codigo Postal: {saleData.buyerData.postalCode}
+                    {", "} */}
+                    {/* {saleData.buyerData.province} <br /> */}
+                    Codigo Postal:
+                    {/* {saleData.buyerData.postalCode} */}
                   </Text>
                 </Wraper>
                 <Wraper>
                   <WraperTitle>Productos comprados</WraperTitle>
                   <Flex direction={"column"}>
-                    {saleData.cart.map((product) => (
+                    {/* {saleData.cart.map((product) => (
                       <Flex
                         key={product.id}
                         justify={"space-between"}
@@ -106,28 +108,29 @@ export default function SingleSellPage() {
                           ${product.price}
                         </Flex>
                       </Flex>
-                    ))}
+                    ))} */}
                   </Flex>
                 </Wraper>
 
                 <Wraper>
                   <WraperTitle>Informacion de compra</WraperTitle>
                   <Text mb={"5px"}>
-                    Total a pagar: $ {saleData.totalPayment}
+                    Total a pagar: $ {saleData.transaction.totalAmount}
                   </Text>
                   <Flex gap={5}>
                     <Text>Estado del envio:</Text>
-                    <StatusShippingBox
+                    {/* <StatusShippingBox
                       saleId={id}
                       status={saleData.shippingStatus}
-                    />
+                    /> */}
                   </Flex>
                   <Flex gap={5} mt={"5px"}>
                     <Text>Estado de compra:</Text>
-                    <StatusPaymentBox
+                    {saleData.status}
+                    {/* <StatusPaymentBox
                       saleId={id}
                       status={saleData.paymentStatus}
-                    />
+                    /> */}
                   </Flex>
                 </Wraper>
               </VStack>
